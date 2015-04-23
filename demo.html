@@ -1,0 +1,55 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="nl" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<title>Leap motion demo</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/leap.css">
+</head>
+<body>
+
+	<div class="wrapper">
+
+	<div class="hand hand-left">L</div>
+	<div class="hand hand-right">R</div>
+
+		<div id="logwin">
+			Hands: <span id="log-hands"></span>
+		</div>
+
+		<div id="log-left" class="hand-log absent">
+			<h2>Left</h2>
+			<p>x: <span class="x"></span></p>
+			<p>y: <span class="y"></span></p>
+			<p>z: <span class="z"></span></p>
+		</div>
+
+		<div id="log-right" class="hand-log absent">
+			<h2>right</h2>
+			<p>x: <span class="x"></span></p>
+			<p>y: <span class="y"></span></p>
+			<p>z: <span class="z"></span></p>
+		</div>
+
+		<div id="obj"></div>
+		
+	</div><!-- /.wrapper -->
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<!--<![endif]-->
+    <!--[if lte IE 8 ]>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.3/jquery.min.js"></script>
+    <![endif]-->
+
+    	<script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
+    	<script src="js/leap.js"></script>
+</body>
+</html>

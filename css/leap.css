@@ -1,0 +1,83 @@
+/*-- Start reset --*/
+			a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,input,ins,kbd,label,legend,li,mark form,menu,nav,object,ol,option,output,p,pre,q,ruby,s,samp,section,select,small,span,strike,strong,sub,summary,sup,table,tbody,td,textarea,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;border:0;padding:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+			button,input[type=checkbox],input[type=image],input[type=radio],input[type=submit],label{cursor:pointer}
+			strong{font-weight:700}
+			em{font-style:italic}
+			.fList{list-style:none}
+			sub, sup {font-size: 0.8em;vertical-align:sub;}
+			sup { vertical-align: super;}
+		/*-- End reset --*/
+
+		html {
+			font-size: 62.5%;/* 10px */
+		}
+		
+		body {
+			font-family: georgia;
+			font-size: 1.6rem;
+			line-height: 1.5;
+		}
+
+		h1 {
+			font-size: 3.2rem;
+			font-weight: bold;
+		}
+
+		h2 {
+			font-size: 2.4rem;
+			font-weight: bold;
+		}
+
+		@font-face {
+			font-family: 'leap-icons';
+			src:url('../fonts/leap-icons.eot?2znn2h');
+			src:url('../fonts/leap-icons.eot?#iefix2znn2h') format('embedded-opentype'),
+				url('../fonts/leap-icons.woff?2znn2h') format('woff'),
+				url('../fonts/leap-icons.ttf?2znn2h') format('truetype'),
+				url('../fonts/leap-icons.svg?2znn2h#leap-icons') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		#obj {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			left: 50%;
+			top: 50%;
+			background: red;
+			transition: 0.5s;
+			-webkit-transition: 0.5s;
+		}
+
+		#obj.to-left {
+			transform: translateX(-400px);
+			background: yellow;
+		}
+
+		#obj.to-right {
+			transform: translateX(400px);
+			background: blue;
+		}
+
+		.hand {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -0.5em;
+			width: 1em;
+			font-family: 'leap-icons';
+			font-size: 5em;
+		}
+
+		.hand-left {
+			transform: rotate(-16deg);
+		}
+
+		.hand-right {
+			transform: rotate(16deg);
+		}
+
+		.hand-log.absent {
+			color: #ccc;
+		}
