@@ -44,7 +44,7 @@
 			width: 100px;
 			height: 100px;
 			left: 50%;
-			top: 50%;
+			top: 70%;
 			background: red;
 			transition: 0.5s;
 			-webkit-transition: 0.5s;
@@ -64,18 +64,27 @@
 			position: absolute;
 			top: 50%;
 			left: 50%;
+			margin-top: -0.5em;
 			margin-left: -0.5em;
 			width: 1em;
 			font-family: 'leap-icons';
 			font-size: 5em;
+			line-height: 1;
+			opacity: 0.2;
+		}
+
+		.hand.js-detected {
+			opacity: 1;
 		}
 
 		.hand-left {
-			transform: rotate(-16deg);
+			/*transform: rotate(-16deg);*/
+			color: rgba(0,0,255,0.6);
 		}
 
 		.hand-right {
-			transform: rotate(16deg);
+			/*transform: rotate(16deg);*/
+			color: rgba(0,255,0,0.6);
 		}
 
 		.hand-log.absent {

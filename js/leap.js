@@ -6,9 +6,15 @@
 		lastHandCount,
 		$logLeft = $('#log-left'),
 		$logRight = $('#log-right'),
+		$leftHand = $('#left-hand'),
+		$rightHand = $('#right-hand'),
 		handLogs = {
 			left: $logLeft,
 			right: $logRight
+		},
+		handObjs = {
+			left: $leftHand,
+			right: $rightHand
 		};
 
 	/**
@@ -87,10 +93,15 @@
 					// }
 
 					if (handCount) {
+						updateHands(frame.hands);
 						logHands(frame.hands);
+					} else {
+						$leftHand.removeClass('js-detected');
+						$rightHand.removeClass('js-detected');
 					}
 				//}
 			}
+			/*
 		  if(frame.valid && frame.gestures.length > 0){
           	var hand = frame.hands[0];
 		    frame.gestures.forEach(function(gesture){
@@ -105,15 +116,65 @@
 		          case "screenTap":
 		              console.log("Screen Tap Gesture");
 		              break;
-		          case "swipe":
+		          case "swipe":+9
 		              swipeHandler(gesture, hand);
 		              break;
 		        }
 		    });
 		  }
+		  //*/
 		});
 		
 	};
+
+
+	/**
+	* 
+	* @param {string} varname Description
+	* @returns {undefined}
+	*/
+	var updateHand = function(hand) {
+		//console.log('uh');
+		var $h = handObjs[hand.type],
+			pos = hand.palmPosition,
+			x = Math.floor(pos[0])+'px',
+			z = Math.floor(pos[1])+'px',
+			y = Math.floor(pos[2])+'px';
+
+		$h.addClass('js-detected')
+			.css({'transform': 'translate('+x+', '+y+')'});
+
+	};
+	
+
+
+	/**
+	* 
+	* @param {leap hands object} hands Description
+	* @returns {undefined}
+	*/
+	var updateHands = function(hands) {
+		var detected = {
+			right: false,
+			left: false
+		};
+
+		for (var i=0; i<hands.length; i++) {
+			var h = hands[i];
+			updateHand(h);
+			detected[h.type] = true;
+		}
+
+		if (!detected.right) {
+			$rightHand.removeClass('js-detected');
+		}
+
+		if (!detected.left) {
+			$leftHand.removeClass('detected');
+		}
+		
+	};
+	
 
 
 	/**
