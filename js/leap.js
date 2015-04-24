@@ -6,126 +6,83 @@
 		lastHandCount,
 		$logLeft = $('#log-left'),
 		$logRight = $('#log-right'),
-		$leftHand = $('#left-hand'),
-		$rightHand = $('#right-hand'),
+		$handLeftSimple = $('#hand--left--simple'),
+		$handRightSimple = $('#hand--right--simple'),
 		handLogs = {
 			left: $logLeft,
 			right: $logRight
 		},
-		handObjs = {
-			left: $leftHand,
-			right: $rightHand
+		handSimpleObjs = {
+			left: $handLeftSimple,
+			right: $handRightSimple
 		};
 
-	/**
-	* 
-	* @param {leap motion gesture object} g Description
-	* @param {leap motion hand object} h Description
-	* @returns {undefined}
-	*/
-	var moveObject = function(g, h, toLeftOrRight) {
+	var $handLeft = $('#hand--left--points'),
+		$handRight = $('#hand--right--points'),
+		fingerNamesMap = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky'],//finger names mapped to finger type integers
+		hands = {
+			left: {
+				obj: $handLeft,
+				palm: $handLeft.find('.palm'),
+				thumb: $handLeft.find('.thumb'),
+				indexFinger: $handLeft.find('.indexFinger'),
+				middleFinger: $handLeft.find('.middleFinger'),
+				ringFinger: $handLeft.find('.ringFinger'),
+				pinky: $handLeft.find('.pinky')
+			},
+			right: {
+				obj: $handRight,
+				palm: $handRight.find('.palm'),
+				thumb: $handRight.find('.thumb'),
+				indexFinger: $handRight.find('.indexFinger'),
+				middleFinger: $handRight.find('.middleFinger'),
+				ringFinger: $handRight.find('.ringFinger'),
+				pinky: $handRight.find('.pinky')
+			}
+		};
 
-		if (h.type === 'right' && toLeftOrRight === 'toLeft') {
-			$obj.removeClass('to-right').addClass('to-left');
-		} else if (h.type === 'left' && toLeftOrRight === 'toRight') {
-			$obj.removeClass('to-left').addClass('to-right');
-		}
-	};
-
-
-	/**
-	* 
-	* @param {string} varname Description
-	* @returns {undefined}
-	*/
-	var circleHandler = function(g, h) {
-		//console.log(g);
-		if (g.state === 'stop'){
-			/*
-			var dir = g.direction;
-			//console.log(dir, g, h);
-
-
-			var toLeftOrRight = (dir[0] > 0) ? 'toRight' : 'toLeft';
-			//console.log(toLeftOrRight);
-
-			moveObject(g, h, toLeftOrRight);
-			*/
-		}
-
-	};
-	
-	
-
-	/**
-	* 
-	* @param {leap motion gesture object} g Description
-	* @param {leap motion hand object} h Description
-	* @returns {undefined}
-	*/
-	var swipeHandler = function(g, h) {
-		if (g.state === 'stop'){
-			var dir = g.direction;
-			//console.log(dir, g, h);
-
-			var toLeftOrRight = (dir[0] > 0) ? 'toRight' : 'toLeft';
-			//console.log(toLeftOrRight);
-
-			moveObject(g, h, toLeftOrRight);
-		}
-	};
-	
 
 	/**
 	* 
 	* @param {string} varname Description
 	* @returns {undefined}
 	*/
-	var addGestureListeners = function() {
+	var initMainLoop = function() {
 	
 		var controller = Leap.loop({enableGestures: true}, function(frame){
 			if (frame.valid) {
-				//if (frame.hands.length) {
-					var handCount = frame.hands.length;
-					// if (handCount !== lastHandCount) {
-					// 	logHands(frame.hands);
-					// 	lastHandCount = handCount;
-					// }
+				var handCount = frame.hands.length;
 
-					if (handCount) {
-						updateHands(frame.hands);
-						logHands(frame.hands);
-					} else {
-						$leftHand.removeClass('js-detected');
-						$rightHand.removeClass('js-detected');
-					}
-				//}
+				if (handCount) {
+					updateHands(frame.hands);
+					logHands(frame.hands);
+				} else {
+					$handLeftSimple.removeClass('js-detected');
+					$handRightSimple.removeClass('js-detected');
+				}
 			}
-			/*
-		  if(frame.valid && frame.gestures.length > 0){
-          	var hand = frame.hands[0];
-		    frame.gestures.forEach(function(gesture){
-		        switch (gesture.type){
-		          case "circle":
-		              console.log("Circle Gesture");
-		              circleHandler(gesture, hand);
-		              break;
-		          case "keyTap":
-		              console.log("Key Tap Gesture");
-		              break;
-		          case "screenTap":
-		              console.log("Screen Tap Gesture");
-		              break;
-		          case "swipe":+9
-		              swipeHandler(gesture, hand);
-		              break;
-		        }
-		    });
-		  }
-		  //*/
 		});
 		
 	};
+
+
+	/**
+	* updates each finger's position
+	* @param {string} varname Description
+	* @returns {undefined}
+	*/
+	var updateFinger = function(finger, leftOrRight, palmPos) {
+		//console.log(fingerNamesMap[finger.type]);
+		var fingerName = fingerNamesMap[finger.type],
+			$finger = hands[leftOrRight][fingerName],
+			pos = finger.tipPosition,
+			x = Math.floor(pos[0])-palmPos[0],
+			z = Math.floor(pos[1])-palmPos[1],
+			y = Math.floor(pos[2])-palmPos[2];
+
+			$finger.css({'transform': 'translate('+x+'px, '+y+'px)'});
+	};
+	
 
 
 	/**
@@ -134,15 +91,29 @@
 	* @returns {undefined}
 	*/
 	var updateHand = function(hand) {
-		//console.log('uh');
-		var $h = handObjs[hand.type],
-			pos = hand.palmPosition,
-			x = Math.floor(pos[0])+'px',
-			z = Math.floor(pos[1])+'px',
-			y = Math.floor(pos[2])+'px';
+		var leftOrRight = hand.type,
+			$hs = handSimpleObjs[leftOrRight],
+			palmPos = hand.palmPosition,
+			palmX = Math.floor(palmPos[0]),
+			palmZ = Math.floor(palmPos[1]),
+			palmY = Math.floor(palmPos[2]);
 
-		$h.addClass('js-detected')
-			.css({'transform': 'translate('+x+', '+y+')'});
+		$hs.addClass('js-detected')
+			.css({'transform': 'translate('+palmX+'px, '+palmY+'px)'});
+
+		var $hp = hands[hand.type].obj,
+			$palm = hands[hand.type].palm,
+			fingers = hand.fingers;
+
+		$hp.addClass('js-detected')
+			.css({'transform': 'translate('+palmX+'px, '+palmY+'px)'});
+
+		//$palm.css({'transform': 'translate('+x+', '+y+')'});
+
+		for (var i=0; i<fingers.length; i++) {
+			var finger = fingers[i];
+			updateFinger(finger, leftOrRight, [palmX,palmZ,palmY]);
+		}
 
 	};
 	
@@ -153,24 +124,24 @@
 	* @param {leap hands object} hands Description
 	* @returns {undefined}
 	*/
-	var updateHands = function(hands) {
+	var updateHands = function(hnds) {
 		var detected = {
 			right: false,
 			left: false
 		};
 
-		for (var i=0; i<hands.length; i++) {
-			var h = hands[i];
+		for (var i=0; i<hnds.length; i++) {
+			var h = hnds[i];
 			updateHand(h);
 			detected[h.type] = true;
 		}
 
 		if (!detected.right) {
-			$rightHand.removeClass('js-detected');
+			$handRightSimple.removeClass('js-detected');
 		}
 
 		if (!detected.left) {
-			$leftHand.removeClass('detected');
+			$handLeftSimple.removeClass('detected');
 		}
 		
 	};
@@ -200,15 +171,15 @@
 	* @param {string} varname Description
 	* @returns {undefined}
 	*/
-	var logHands = function(hands) {
+	var logHands = function(hnds) {
 		var msg,
 			detected = {
 				right: false,
 				left: false
 			};
 
-		for (var i=0; i<hands.length; i++) {
-			var h = hands[i];
+		for (var i=0; i<hnds.length; i++) {
+			var h = hnds[i];
 			logHand(h);
 			detected[h.type] = true;
 		}
@@ -247,7 +218,7 @@
 	* @returns {undefined}
 	*/
 	var init = function() {
-		addGestureListeners();
+		initMainLoop();
 	};
 
 

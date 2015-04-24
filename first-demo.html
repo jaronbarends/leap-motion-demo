@@ -15,38 +15,14 @@
 </head>
 <body>
 
-	<div class="window">
+	<div class="wrapper">
 
-		<div id="hand--left--simple" class="hand hand--left hand--simple hand--left--simple">L</div>
-		<div id="hand--right--simple" class="hand hand--right hand--simple hand--right--simple">R</div>
+	<div id="left-hand" class="hand hand-left">L</div>
+	<div id="right-hand" class="hand hand-right">R</div>
 
-	</div>
-
-
-	<div class="window">
-
-		<div id="hand--left--points" class="hand hand--points hand--left hand--left--points">
-			<div class="point palm"></div>
-			<div class="point finger thumb">T</div>
-			<div class="point finger indexFinger">I</div>
-			<div class="point finger middleFinger">M</div>
-			<div class="point finger ringFinger">R</div>
-			<div class="point finger pinky">P</div>
+		<div id="logwin">
+			Hands: <span id="log-hands"></span>
 		</div>
-
-		<div id="hand--right--points" class="hand hand--points hand--right hand--right--points">
-			<div class="point palm"></div>
-			<div class="point finger thumb">T</div>
-			<div class="point finger indexFinger">I</div>
-			<div class="point finger middleFinger">M</div>
-			<div class="point finger ringFinger">R</div>
-			<div class="point finger pinky">P</div>
-		</div>
-
-	</div>
-
-	<div id="logwin">
-		Hands: <span id="log-hands"></span>
 
 		<div id="log-left" class="hand-log absent">
 			<h2>Left</h2>
@@ -61,9 +37,10 @@
 			<p>y: <span class="y"></span></p>
 			<p>z: <span class="z"></span></p>
 		</div>
-	</div>
 
+		<div id="obj"></div>
 		
+	</div><!-- /.wrapper -->
 
 	<!--[if (gte IE 9)|!(IE)]><!-->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
